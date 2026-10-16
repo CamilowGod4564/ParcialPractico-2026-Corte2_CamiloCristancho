@@ -1,5 +1,6 @@
 ## Parcial Práctico Corte 2 – REST API Blueprints (Java 21 / Spring Boot 3.3.x)
-# Escuela Colombiana de Ingeniería – Arquitecturas de Software  
+# Escuela Colombiana de Ingeniería – Arquitecturas de Software
+# JUAN CAMILO CRISTANCHO VELASQUEZ
 
 ---
 
