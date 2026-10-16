@@ -54,6 +54,12 @@ Todo este parcial se ejecuta o se hacen cambios principalmente en la clase contr
 
 ## Solución
 
+```java
+    @RestController
+    //PUNTO 1: Modificacion del path base del controlador a la ruta especificada
+    @RequestMapping("/api/v1/blueprints")
+    public class BlueprintsAPIController {
+  ```
 
 
 
@@ -103,16 +109,35 @@ Asi cambiaremos el metodo del get en el controlador, para que de como respuesta 
     }
   ```
 
-Ya funcionando el primero seguimos para las demas 
+Ya funcionando el primero seguimos para los demas metodos del controller. 
 ### 4. OpenAPI / Swagger
 - Configura `springdoc-openapi` en el proyecto.
 - Expón documentación automática en `/swagger-ui.html`.
 - Actualiza la documentación de los endpoints con `@Operation` y `@ApiResponse` de todos los métodos del controler.
 
+## Solucion
 
-## ✅ Entregables
+Para formar la documentacion del parcial, usamos @operation que nos ayuda a darle un titulo y una descripcion a cada endpoint
+y el @ApiResponse nos ayuda a documentar las distintas salidas esperadas con su respectivo codigo http.
 
-1. Repositorio en GitHub con:
-    - Código fuente actualizado.
-    - Swagger/OpenAPI habilitado.
-    - Clase `ApiResponse<T>` implementada.
+Un ejemplo se ve en el metodo GET, donde la documentacion se ve de esta manera
+
+```java
+    @Operation(
+        summary = "Get de todos los BluePrints",
+        description = "Retorna una lista de todos los planos guardados en el sistema"
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "200",
+            description = "Blueprints retornados existosamente",
+            content = @Content(schema = @Schema(implementation = Blueprint.class))
+    )
+  ```
+
+ y en swagger de la siguiente manera
+
+![](img/get.png)
+
+Y seguimos el mismo patron para los demas metodos.
+
+

@@ -8,6 +8,7 @@ import edu.eci.arsw.blueprints.services.BlueprintsServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,15 @@ public class BlueprintsAPIController {
     public BlueprintsAPIController(BlueprintsServices services) { this.services = services; }
 
     // GET /blueprints
+    @Operation(
+            summary = "Get de todos los BluePrints",
+            description = "Retorna una lista de todos los planos guardados en el sistema"
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "200",
+            description = "Blueprints retornados existosamente",
+            content = @Content(schema = @Schema(implementation = Blueprint.class))
+    )
     @GetMapping
     public ResponseEntity<ApiResponse<Set<Blueprint>>> getAll() {
         Set<Blueprint> blueprints = services.getAllBlueprints();
@@ -34,6 +44,16 @@ public class BlueprintsAPIController {
     }
 
     // GET /blueprints/{author}
+    @Operation(
+            summary = "Get de todos los BluePrints filtrando por autor",
+            description = "Retorna una lista con todos los planos de un autor en especifico."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200", description = "Blueprint encontrado"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404", description = "Blueprint no encontrado")
+    })
     @GetMapping("/{author}")
     public ResponseEntity<ApiResponse<?>> byAuthor(@PathVariable String author) {
         try {
@@ -45,6 +65,16 @@ public class BlueprintsAPIController {
     }
 
     // GET /blueprints/{author}/{bpname}
+    @Operation(
+            summary = "Retorna un plano en especifico",
+            description = "Retorna un plano en especifico filtrando por nombre y autor"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200", description = "Blueprint encontrado"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404", description = "Blueprint no encontrado")
+    })
     @GetMapping("/{author}/{bpname}")
     public ResponseEntity<?> byAuthorAndName(@PathVariable String author, @PathVariable String bpname) {
         try {
@@ -56,6 +86,18 @@ public class BlueprintsAPIController {
     }
 
     // POST /blueprints
+    @Operation(
+            summary = "Crear un nuevo plano",
+            description = "Registra un nuevo plano con su autor, nombre del plano y una lista de puntos"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "201", description = "Blueprint creado exitosamente"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "400", description = "La lista de puntos no puede estar vacia"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "409", description = "Ya existe un plano con esos parametros")
+    })
     @PostMapping
     public ResponseEntity<?> add(@Valid @RequestBody NewBlueprintRequest req) {
         try {
@@ -80,6 +122,16 @@ public class BlueprintsAPIController {
     }
 
     // PUT /blueprints/{author}/{bpname}/points
+    @Operation(
+            summary = "Añadir un punto a un plano",
+            description = "Añade un punto (x, y) a un plano dado, filtrando por autor y nombre del plano."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "202", description = "Punto añadido exitosamente"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404", description = "Plano no encontrado")
+    })
     @PutMapping("/{author}/{bpname}/points")
     public ResponseEntity<?> addPoint(@PathVariable String author, @PathVariable String bpname,
                                       @RequestBody Point p) {
