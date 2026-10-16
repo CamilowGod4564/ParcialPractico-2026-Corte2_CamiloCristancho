@@ -39,6 +39,15 @@ src/main/java/edu/eci/arsw/blueprints
   ├── filters/       # Filtros de procesamiento (Identity, Redundancy, Undersampling)
   ├── controllers/   # REST Controllers (BlueprintsAPIController)
   └── config/        # Configuración (Swagger/OpenAPI, etc.)
+  @Operation(
+            summary = "Get all blueprints",
+            description = "Returns the full set of blueprints stored in the system."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+            responseCode = "200",
+            description = "Blueprints retrieved successfully",
+            content = @Content(schema = @Schema(implementation = Blueprint.class))
+    )
 ```
 
 > Esta separación sigue el patrón **capas lógicas** (modelo, persistencia, servicios, controladores), facilitando la extensión hacia nuevas tecnologías o fuentes de datos.
