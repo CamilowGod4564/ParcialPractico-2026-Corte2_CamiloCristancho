@@ -1,5 +1,6 @@
 ## Parcial Práctico Corte 2 – REST API Blueprints (Java 21 / Spring Boot 3.3.x)
-# Escuela Colombiana de Ingeniería – Arquitecturas de Software  
+# Escuela Colombiana de Ingeniería – Arquitecturas de Software
+# JUAN CAMILO CRISTANCHO VELASQUEZ
 
 ---
 
@@ -38,6 +39,7 @@ src/main/java/edu/eci/arsw/blueprints
   ├── filters/       # Filtros de procesamiento (Identity, Redundancy, Undersampling)
   ├── controllers/   # REST Controllers (BlueprintsAPIController)
   └── config/        # Configuración (Swagger/OpenAPI, etc.)
+  
 ```
 
 > Esta separación sigue el patrón **capas lógicas** (modelo, persistencia, servicios, controladores), facilitando la extensión hacia nuevas tecnologías o fuentes de datos.
